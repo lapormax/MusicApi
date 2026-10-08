@@ -1,0 +1,12 @@
+Déploiement de l'API Music sur Alwaysdata
+
+1. Dans Alwaysdata, créez une base MariaDB/MySQL et importez-y les tables et données du projet.
+2. Créez un site de type PHP (PHP 8.0 ou plus récent) dont le dossier racine est le dossier `public` de ce projet.
+3. Envoyez les fichiers de cette archive dans le répertoire du projet. Le dossier `src/Middleware` respecte maintenant la casse du namespace PHP sur Linux.
+4. Renseignez dans l'environnement du site les variables DB_HOST, DB_USER, DB_NAME et DB_PASSWORD avec les paramètres de la base affichés dans Alwaysdata. Si votre mode de déploiement ne permet pas de définir ces variables, remplacez les valeurs de secours correspondantes dans `app/settings.php`.
+5. En SSH, à la racine du projet, exécutez `composer install --no-dev --optimize-autoloader` pour installer ou régénérer les dépendances. Le dépôt inclut déjà `composer.lock`.
+6. Vérifiez d'abord la racine `/` du site ; elle doit répondre « Hello world! ».
+
+L'API `/api/artists` reste protégée par JWT. Il faut appeler POST `/login` pour obtenir un token, puis envoyer `Authorization: Bearer <token>` avec les requêtes vers `/api/artists`. Une ouverture directe de cette route dans le navigateur sans token renvoie donc `Unauthorized`.
+
+Dans `app/repositories.php`, le dépôt ArtistRepository est maintenant enregistré dans le conteneur DI.

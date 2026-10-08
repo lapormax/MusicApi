@@ -25,10 +25,11 @@ return function (ContainerBuilder $containerBuilder) {
                 // Ajout du prof
                 'db' => [
                     'driver'    => 'mysql',
-                    'host'      => 'localhost',
-                    'username'  => 'root',
-                    'database'  => 'music',
-                    'password'  => '',
+                    // Configure these values for the database created in Alwaysdata.
+                    'host'      => getenv('DB_HOST') ?: 'localhost',
+                    'username'  => getenv('DB_USER') ?: 'root',
+                    'database'  => getenv('DB_NAME') ?: 'music',
+                    'password'  => getenv('DB_PASSWORD') ?: '',
                     'charset'   => 'utf8mb4',
                     'collation' => 'utf8mb4_unicode_ci',
                     'flags'     => [
